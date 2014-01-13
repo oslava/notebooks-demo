@@ -1,0 +1,21 @@
+{
+  "name": "notebooks-demo",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "ejs": "*",
+    "ejs-locals": "*",
+    "nconf": "*",
+    "bcrypt-nodejs": "*",
+    "connect-mongo": "*",
+    "mongoose": "*"
+  },
+  "subdomain": "oslava-notebooks",
+  "engines": {
+    "node": "0.10.x"
+  }
+}

@@ -1,0 +1,10 @@
+<% layout('layout/page') -%>
+<% block('title', 'Notebooks'); -%>
+
+<div class="starter-template">
+    <h1>Welcome to Notebooks</h1>
+    <p class="lead">Create your notes. Note everything you want. Make your notes available to other people.</p>
+    <% if (!user) { %>
+    <p class="lead">Please login to start using notebooks.</p>
+    <% } %>
+</div>

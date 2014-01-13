@@ -1,0 +1,111 @@
+<% layout('layout/page') -%>
+<% script('/knockoutjs/knockout.js') -%>
+<% script('/js/notebooks.js') -%>
+<% block('title', 'Your notes'); -%>
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-xs-12 col-sm-9">
+        <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+        </p>
+        <div class="jumbotron" data-bind="with: activeNotebook()">
+            <div data-bind="visible: _id == null">
+                <h1>Your notes!</h1>
+                <p>Here are your notes grouped into notebooks. All of your notebooks are listed in the right column, just click them.</p>
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#notebookDialog">Create notebook</button>
+            </div>
+            <div data-bind="visible: _id != null" style="display: none;">
+                <h1 data-bind="text: name"></h1>
+                <button class="btn btn-success btn-lg" data-bind="click: createNote">Create note</button>
+                <button class="btn btn-default btn-lg pull-right" data-bind="click: $root.removeActiveNotebook">Delete notebook</button>
+            </div>
+        </div>
+
+        <div class="row" data-bind="foreach: activeNotebook().notes, visible: true" style="display: none;">
+            <div class="col-6 col-sm-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <button type="button" class="close" title="Delete note" aria-hidden="true" data-bind="click: $root.activeNotebook().removeNote">&times;</button>
+                        <h2 class="panel-title" data-bind="text: title"></h2>
+                    </div>
+                    <div class="panel-body">
+                        <p data-bind="text: text"></p>
+                        <button class="btn btn-default btn-sm" role="button" data-bind="click: $root.activeNotebook().editNote">Edit</button>
+                    </div>
+                </div>
+            </div><!--/span-->
+        </div><!--/row-->
+    </div><!--/span-->
+
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <button class="btn btn-success" data-toggle="modal" data-target="#notebookDialog">Create notebook</button>
+        <div class="list-group" data-bind="foreach: notebooks">
+            <a href="#" class="list-group-item" data-bind="css: { active: $data == $parent.activeNotebook() }, click: $parent.activate">
+                <span class="badge" data-bind="text: notes().length"></span>
+                <h4 class="list-group-item-heading" data-bind="text: name"></h4>
+                <span class="visibility-level" data-bind="text: visibility"></span>
+            </a>
+        </div>
+    </div><!--/span-->
+
+    <div class="modal fade" id="notebookDialog" tabindex="-1" role="dialog" aria-labelledby="notebookDialogLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="notebookDialogLabel">New notebook</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="newNotebookForm">
+                        <div class="form-group">
+                            <label for="nameField" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="nameField" name="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="alert alert-danger" style="display: none;"></div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="noteDialog" tabindex="-1" role="dialog" aria-labelledby="noteDialogLabel" data-bind="modalForm: activeNotebook().modalEvent().modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" data-bind="with: activeNotebook()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="noteDialogLabel" data-bind="text: activeNote()._id ? 'Edit note' : 'New note'"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" data-bind="submit: saveActiveNote">
+                        <div class="form-group">
+                            <label for="titleField" class="col-sm-2 control-label">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="titleField" name="title" data-bind="value: activeNote().title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textField" class="col-sm-2 control-label">Text</label>
+                            <div class="col-sm-10">
+                                <textarea rows="5" class="form-control" id="textField" name="text" data-bind="value: activeNote().text"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="alert alert-danger" style="display: none;" data-bind="text: saveError(), visible: saveError() != ''"></div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div><!--/row-->

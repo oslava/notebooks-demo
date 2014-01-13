@@ -1,0 +1,34 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.padme {
+    padding: 17px;
+    width: 250px;
+}
+
+.command {
+    font-size: 12px;
+}
+
+.navbar-inverse .navbar-nav > li > a.user {
+    color: #00bfff;
+}
+
+.navbar-inverse .navbar-nav > li > a.user:hover {
+    color: #00bfff;
+}
+
+.row-offcanvas .sidebar-offcanvas {
+    padding-top: 20px;
+}
+
+.row-offcanvas .sidebar-offcanvas button {
+    margin-bottom: 20px;
+}
+
+.list-group .list-group-item .visibility-level {
+    font-size: 12px;
+    font-weight: 200;
+}
