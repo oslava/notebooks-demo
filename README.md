@@ -1,6 +1,6 @@
 notebooks-demo
 ==============
-This is a demo project for my portfolio.
+This is a demo project
 <h4>Technology stack</h4>
 <ul>
 	<li>Node.js</li>
